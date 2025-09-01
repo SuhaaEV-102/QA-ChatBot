@@ -79,7 +79,7 @@ vectorstore = FAISS(
 # ========= LLM =========
 llm = ChatGroq(
     groq_api_key=GROQ_API_KEY,
-    model="gemma-1.5-turbo",
+    model="llama-3.3-70b-versatile",
     temperature=0.2,
     max_tokens=512
 )
