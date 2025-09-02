@@ -333,25 +333,7 @@ def ask_question():
     })
 
 # ========= AUTOCOMPLETE =========
-@app.route("/suggest", methods=["POST"])
-def suggest():
-    data = request.get_json()
-    query = data.get("query", "").strip()
-    if not query:
-        return jsonify({"suggestions": []})
 
-    try:
-        prompt = (
-            f"User is typing: '{query}'. Suggest 5 likely next words or short phrases. "
-            "Return them as a plain list, one per line, no numbering or extra symbols."
-        )
-        resp = llm.invoke(prompt)
-        text = resp.content if hasattr(resp, "content") else str(resp)
-        suggestions = [s.strip() for s in text.split("\n") if s.strip()]
-        return jsonify({"suggestions": suggestions[:5]})
-    except Exception as e:
-        print(f"⚠ Suggestion error: {e}")
-        return jsonify({"suggestions": []})
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -375,7 +357,7 @@ def chat_page():
 def signup():
     data = request.get_json()
     fullname = data.get("fullname")
-    email = data.get("email")
+    email = data.get("email") 
     password = generate_password_hash(data.get("password"))
     try:
         with sqlite3.connect(DB_FILE) as conn:
